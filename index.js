@@ -23,38 +23,39 @@ app.use('/api/users', usersRouter)
 const productsRouter = require('./api/products');
 app.use('/api/products', productsRouter);
 
-// // Mount router for /orders
-// const ordersRouter = require('./api/orders');
-// app.use('/api/orders', ordersRouter);
+// Mount router for /orders
+const ordersRouter = require('./api/orders');
+app.use('/api/orders', ordersRouter);
 
-// // Mount router for /carts
-// const cartsRouter = require('./api/carts');
-// app.use('/api/carts', cartsRouter);
+// Mount router for /carts
+const cartsRouter = require('./api/carts');
+app.use('/api/carts', cartsRouter);
 
-// // Mount router for /order_items
-// const orderItemsRouter = require('./api/orderItems');
-// app.use('/api/order_items', orderItemsRouter);
+// Mount router for /order_items
+const orderItemsRouter = require('./api/orderItems');
+app.use('/api/order_items', orderItemsRouter);
 
-// // Mount router for /orders
-// const cartItemsRouter = require('./api/cartItems');
-// app.use('/api/cart_items', cartItemsRouter);
+// Mount router for /orders
+const cartItemsRouter = require('./api/cartItems');
+app.use('/api/cart_items', cartItemsRouter);
 
-// // Mount router for /dashboard
-// const dashboardRouter = require('./api/dashboard');
-// app.use('/api/dashboard', dashboardRouter);
 
-// // Mount router for /addresses
-// const addressesRouter = require('./api/addresses');
-// app.use('/api/addresses', addressesRouter);
 
-// // Mount router for /reviews
-// const reviewsRouter = require('./api/reviews');
-// app.use('/api/reviews', reviewsRouter);
+// Mount router for /addresses
+const addressesRouter = require('./api/addresses');
+app.use('/api/addresses', addressesRouter);
+
+// Mount router for /reviews
+const reviewsRouter = require('./api/reviews');
+app.use('/api/reviews', reviewsRouter);
 
 // // Mount router for /reviews
 // const orderReviews = require('./api/orderReviews');
 // app.use('/api/orderReviews', orderReviews);
 
+// // Mount router for /dashboard
+// const dashboardRouter = require('./api/dashboard');
+// app.use('/api/dashboard', dashboardRouter);
 
 
 app.listen( port, () => {
