@@ -29,7 +29,11 @@ const getProductById = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.status(404).send();
+      }
     }
   );
 };
@@ -131,7 +135,12 @@ const getProductPage = (request, response) => {
         if (error) {
           throw error;
         }
-        response.status(200).json(result.rows);
+
+        if (result.rows.length > 0) {
+          response.status(200).json(result.rows);
+        } else {
+          response.status(404).send();
+        }
       }
     );
   }

@@ -14,10 +14,9 @@ app.use(express.json());
 // HTTP request logger middleware setup for development use.
 app.use(morgan('dev'));
 
-
 // Mount router for /users
 const usersRouter = require('./api/users');
-app.use('/api/users', usersRouter)
+app.use('/api/users', usersRouter);
 
 // Mount router for /products
 const productsRouter = require('./api/products');
@@ -39,8 +38,6 @@ app.use('/api/order_items', orderItemsRouter);
 const cartItemsRouter = require('./api/cartItems');
 app.use('/api/cart_items', cartItemsRouter);
 
-
-
 // Mount router for /addresses
 const addressesRouter = require('./api/addresses');
 app.use('/api/addresses', addressesRouter);
@@ -49,15 +46,17 @@ app.use('/api/addresses', addressesRouter);
 const reviewsRouter = require('./api/reviews');
 app.use('/api/reviews', reviewsRouter);
 
-// // Mount router for /reviews
-// const orderReviews = require('./api/orderReviews');
-// app.use('/api/orderReviews', orderReviews);
+// Mount router for /reviews
+const orderReviews = require('./api/orderReviews');
+app.use('/api/orderReviews', orderReviews);
 
 // // Mount router for /dashboard
 // const dashboardRouter = require('./api/dashboard');
 // app.use('/api/dashboard', dashboardRouter);
 
-
-app.listen( port, () => {
-  console.log(`Server started. Listening on ${port}:`)
-})
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Server started. Listening on ${port}:`);
+  });
+}
+module.exports = app;

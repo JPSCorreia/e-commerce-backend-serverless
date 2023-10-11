@@ -34,7 +34,7 @@ productsRouter.get(
 // GET request for total number of products
 productsRouter.get('/total/get_number', checkJwt, productQueries.getNumberOfProducts);
 
-// GET request for searching for products
+// POST request for searching for products
 productsRouter.post(
   '/search_products/search',
   checkJwt,
