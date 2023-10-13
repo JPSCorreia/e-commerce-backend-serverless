@@ -58,7 +58,7 @@ const createProduct = (request, response, next) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`product POST with id: ${result.rows[0].id}`);
+      response.status(201).json(result.rows[0].id);
     }
   );
 };

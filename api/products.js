@@ -41,4 +41,5 @@ productsRouter.post(
   productQueries.getSearchResults
 );
 
+
 module.exports = productsRouter;
