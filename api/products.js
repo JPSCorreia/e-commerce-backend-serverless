@@ -9,18 +9,6 @@ productsRouter.get('/', productQueries.getAllProducts);
 // GET request for single product by id
 productsRouter.get('/:id', productQueries.getProductById);
 
-// POST request for adding a new product
-productsRouter.post('/', checkJwt, productQueries.createProduct);
-
-// DELETE request for deleting existing product
-productsRouter.delete('/:id', checkJwt, productQueries.deleteProduct);
-
-// UPDATE request for adding existing product stock
-productsRouter.put('/add_stock', checkJwt, productQueries.addStock);
-
-// UPDATE request for removing existing product stock
-productsRouter.put('/', checkJwt, productQueries.removeStock);
-
 // GET request for products page
 productsRouter.get('/page/:page', checkJwt, productQueries.getProductPage);
 
@@ -32,7 +20,11 @@ productsRouter.get(
 );
 
 // GET request for total number of products
-productsRouter.get('/total/get_number', checkJwt, productQueries.getNumberOfProducts);
+productsRouter.get(
+  '/total/get_number',
+  checkJwt,
+  productQueries.getNumberOfProducts
+);
 
 // POST request for searching for products
 productsRouter.post(
@@ -41,5 +33,16 @@ productsRouter.post(
   productQueries.getSearchResults
 );
 
+// POST request for adding a new product
+productsRouter.post('/', checkJwt, productQueries.createProduct);
+
+// UPDATE request for adding existing product stock
+productsRouter.put('/add_stock', checkJwt, productQueries.addStock);
+
+// UPDATE request for removing existing product stock
+productsRouter.put('/', checkJwt, productQueries.removeStock);
+
+// DELETE request for deleting existing product
+productsRouter.delete('/:id', checkJwt, productQueries.deleteProduct);
 
 module.exports = productsRouter;

@@ -1,22 +1,5 @@
 const pool = require('../middleware/pool');
 
-// get the user_name by user id.
-const getUsernameById = (request, response) => {
-  pool.query(
-    `SELECT user_name
-    FROM users
-    WHERE id = $1
-    `,
-    [request.user.id],
-    (error, result) => {
-      if (error) {
-        throw error;
-      }
-      response.json(user.rows[0]);
-    }
-  );
-};
-
 // get all user info by email.
 const getUserByUsername = (request, response) => {
   const userUsername = request.params.username;
@@ -30,7 +13,11 @@ const getUserByUsername = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
 };
@@ -40,10 +27,10 @@ const getMonthAndYear = (request, response) => {
   const userEmail = request.params.email;
   pool.query(
     `SELECT
-    TO_CHAR(
+    RTRIM(TO_CHAR(
       TO_DATE (
         EXTRACT(MONTH FROM created_timestamp)::text, 'MM'), 'Month'
-      ) AS "month",
+      )) AS "month",
       EXTRACT(YEAR FROM created_timestamp) AS "year"
       FROM users
       WHERE email = $1
@@ -53,9 +40,22 @@ const getMonthAndYear = (request, response) => {
       if (error) {
         throw error;
       }
-      response.json(result.rows[0]);
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows[0]);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
+  // `SELECT
+  // TO_CHAR(
+  //   TO_DATE (
+  //     EXTRACT(MONTH FROM created_timestamp)::text, 'MM'), 'Month'
+  //   ) AS "month",
+  //   EXTRACT(YEAR FROM created_timestamp) AS "year"
+  //   FROM users
+  //   WHERE email = $1
+  //   `
 };
 
 // create new user.
@@ -71,24 +71,7 @@ const createUser = (request, response, next) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`user POST with id: ${result.rows[0].id}`);
-    }
-  );
-};
-
-// delete a user.
-const deleteUser = (request, response) => {
-  const itemId = parseInt(request.params.id);
-  pool.query(
-    `DELETE FROM users
-    WHERE id = $1
-    `,
-    [itemId],
-    (error, result) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).send(`user DELETE with id: ${itemId}`);
+      response.status(201).json(result.rows[0].id);
     }
   );
 };
@@ -111,8 +94,24 @@ const updateUser = (request, response) => {
   );
 };
 
+// delete a user.
+const deleteUser = (request, response) => {
+  const itemId = parseInt(request.params.id);
+  pool.query(
+    `DELETE FROM users
+    WHERE id = $1
+    `,
+    [itemId],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).send(`user DELETE with id: ${itemId}`);
+    }
+  );
+};
+
 module.exports = {
-  getUsernameById,
   getUserByUsername,
   getMonthAndYear,
   createUser,
