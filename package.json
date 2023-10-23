@@ -6,6 +6,10 @@
   "scripts": {
     "test": "jest --watchAll --no-cache --detectOpenHandles",
     "test users": "jest users --watchAll --no-cache --detectOpenHandles",
+    "test orders": "jest orders --watchAll --no-cache --detectOpenHandles",
+    "test addresses": "jest addresses --watchAll --no-cache --detectOpenHandles",
+    "test cartItems": "jest cartItems --watchAll --no-cache --detectOpenHandles",
+    "test orderItems": "jest orderItems --watchAll --no-cache --detectOpenHandles",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },

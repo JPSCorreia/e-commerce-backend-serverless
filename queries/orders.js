@@ -14,7 +14,11 @@ const getAllOrdersByEmail = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
 };
@@ -32,7 +36,11 @@ const getOrderById = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
 };
@@ -52,7 +60,61 @@ const getAllOrderItems = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.sendStatus(404);
+      }
+    }
+  );
+};
+
+// get total number of orders by user
+const getNumberOfOrders = (request, response) => {
+  const userEmail = request.params.email;
+  pool.query(
+    `SELECT count(*)
+    FROM orders
+    WHERE user_email = $1
+    `,
+    [userEmail],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+
+      if (result.rows[0].count > 0) {
+        response.status(200).json(Number(result.rows[0].count));
+      } else {
+        response.sendStatus(404);
+      }
+    }
+  );
+};
+
+// get order month and year by user
+const getOrderMonthAndYear = (request, response) => {
+  const userEmail = request.params.email;
+  pool.query(
+    `SELECT
+    RTRIM(TO_CHAR(
+      TO_DATE (
+        EXTRACT(MONTH FROM created_timestamp)::text, 'MM'), 'Month'
+      )) AS "month",
+      EXTRACT(YEAR FROM created_timestamp) AS "year"
+      FROM orders
+      WHERE user_email = $1
+      `,
+    [userEmail],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows[0]);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
 };
@@ -80,7 +142,29 @@ const createOrder = (request, response, next) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`${result.rows[0].id}`);
+      response.status(201).json(result.rows[0].id);
+    }
+  );
+};
+
+// update an order.
+const updateOrder = (request, response) => {
+  const itemId = parseInt(request.params.id);
+  pool.query(
+    `UPDATE orders
+          SET user_email = $1, total = $2, status = $3
+          WHERE id = ${itemId}
+          `,
+    [request.body.user_email, request.body.total, request.body.status],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      if (result.rowCount > 0) {
+        response.status(200).send(`order UPDATE with id: ${itemId}`);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
 };
@@ -97,63 +181,14 @@ const deleteOrder = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`order DELETE with id: ${itemId}`);
+      if (result.rowCount > 0) {
+        response.status(200).send(`order DELETE with id: ${itemId}`);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
 };
-
-// update an order.
-const updateOrder = (request, response) => {
-  const itemId = parseInt(request.params.id);
-  pool.query(
-    `UPDATE ${itemType}
-          SET user_email = $1, total = $2, status = $3
-          WHERE id = ${itemId}
-          `,
-    [request.body.user_email, request.body.total, request.body.status],
-    (error, result) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).send(`order UPDATE with id: ${itemId}`);
-    }
-  );
-};
-
-// get total number of orders by user
-const getNumberOfOrders = (request, response) => {
-  const userEmail = request.params.email;
-  pool.query(
-    `SELECT count(*)
-    FROM orders
-    WHERE user_email = $1
-    `, [userEmail], (error, result) => {
-      if (error) {
-        throw error;
-      }
-    response.json(result.rows[0])
-  })
-};
-
-// get order month and year by user
-const getOrderMonthAndYear = (request, response) => {
-  const userEmail = request.params.email;
-  pool.query(
-    `SELECT
-    TO_CHAR(
-      TO_DATE (
-        EXTRACT(MONTH FROM created_timestamp)::text, 'MM'), 'Month'
-      ) AS "month",
-      EXTRACT(YEAR FROM created_timestamp) AS "year"
-      FROM orders
-      WHERE user_email = $1
-      `, [userEmail], (error, result) => {
-      if (error) {
-        throw error;
-      }
-    response.json(result.rows[0])
-  })
-}
 
 module.exports = {
   getAllOrdersByEmail,

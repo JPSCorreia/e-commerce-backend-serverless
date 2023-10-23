@@ -25,16 +25,16 @@ cartItemsRouter.get('/total_number/:email', checkJwt, cartItemQueries.getItemTot
 // POST request for adding a new row
 cartItemsRouter.post('/', checkJwt, cartItemQueries.createCartItem);
 
-// DELETE request for deleting existing row
-cartItemsRouter.delete('/delete_item/:user_email/:products_id', checkJwt, cartItemQueries.deleteCartItem);
-
-// DELETE request for deleting all cart items belonging to a single user
-cartItemsRouter.delete('/delete_cart/:email', cartItemQueries.deleteAllFromCart);
-
 // PUT request to update quantity of product by user email product id
 cartItemsRouter.put('/', checkJwt, cartItemQueries.addQuantity);
 
 // PUT request to update quantity of product by user email product id
 cartItemsRouter.put('/remove_quantity', checkJwt, cartItemQueries.removeQuantity);
+
+// DELETE request for deleting existing row
+cartItemsRouter.delete('/delete_item/:user_email/:products_id', checkJwt, cartItemQueries.deleteCartItem);
+
+// DELETE request for deleting all cart items belonging to a single user
+cartItemsRouter.delete('/delete_cart/:email', cartItemQueries.deleteAllFromCart);
 
 module.exports = cartItemsRouter;

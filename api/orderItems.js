@@ -12,10 +12,10 @@ orderItemsRouter.get('/:id', checkJwt, orderItemQueries.getOrderItemsById);
 // POST request for adding a new row
 orderItemsRouter.post('/', checkJwt, orderItemQueries.addOrderItems);
 
-// DELETE request for deleting existing row
-orderItemsRouter.delete('/:id', checkJwt, orderItemQueries.deleteOrderItem);
-
 // UPDATE request for updating existing row
 orderItemsRouter.put('/:id', checkJwt, orderItemQueries.updateOrderItem);
+
+// DELETE request for deleting existing row
+orderItemsRouter.delete('/:id', checkJwt, orderItemQueries.deleteOrderItem);
 
 module.exports = orderItemsRouter;

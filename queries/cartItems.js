@@ -7,7 +7,6 @@ const getAllCartItems = (request, response) => {
     FROM cart_items
     ORDER BY id ASC
     `,
-    [itemType],
     (error, result) => {
       if (error) {
         throw error;
@@ -30,7 +29,11 @@ const getCartByEmail = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
 };
@@ -50,7 +53,35 @@ const getCartByEmailAndProductId = (request, response) => {
         throw error;
       }
 
-      response.status(200).json(result.rows);
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.sendStatus(404);
+      }
+    }
+  );
+};
+
+// get sum of the price of all items in cart_items belonging to a single user.
+const getTotalPriceByEmail = (request, response) => {
+  const userEmail = request.params.email;
+  pool.query(
+    `SELECT SUM((price - (price * discount/100)) * quantity)
+    FROM cart_items
+    JOIN products
+    ON cart_items.products_id = products.id
+    WHERE user_email = $1;
+    `,
+    [userEmail],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      if (result.rows[0].sum == null) {
+        response.sendStatus(404);
+      } else {
+        response.status(200).json(result.rows);
+      }
     }
   );
 };
@@ -71,27 +102,11 @@ const getCartProductsByEmail = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
-    }
-  );
-};
-
-// get sum of the price of all items in cart_items belonging to a single user.
-const getTotalPriceByEmail = (request, response) => {
-  const userEmail = request.params.email;
-  pool.query(
-    `SELECT SUM((price - (price * discount/100)) * quantity)
-    FROM cart_items
-    JOIN products
-    ON cart_items.products_id = products.id
-    WHERE user_email = $1;
-    `,
-    [userEmail],
-    (error, result) => {
-      if (error) {
-        throw error;
+      if (result.rows.length > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.sendStatus(404);
       }
-      response.status(200).json(result.rows);
     }
   );
 };
@@ -109,7 +124,11 @@ const getItemTotalByEmail = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
+      if (result.rows[0].sum == null) {
+        response.sendStatus(404);
+      } else {
+        response.status(200).json(result.rows);
+      }
     }
   );
 };
@@ -127,40 +146,9 @@ const createCartItem = (request, response, next) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`${result.rows[0].id}`);
+      response.status(201).json(result.rows[0].id);
     }
   );
-};
-
-// delete cart item by products_id
-const deleteCartItem = (request, response) => {
-  const products_id = parseInt(request.params.products_id);
-  const user_email = request.params.user_email;
-  pool.query(
-    `DELETE FROM cart_items
-    WHERE products_id = $1 AND user_email = $2
-    RETURNING id, products_id, user_email, quantity
-    `, [products_id, user_email], (error, result) => {
-      if(error) {
-        throw error;
-      }
-      response.status(200).send(result.rows);
-    }
-  )
-}
-
-// remove all cart_items belonging to a single user.
-const deleteAllFromCart = (request, response) => {
-  const userEmail = request.params.email;
-  pool.query(
-    `DELETE FROM cart_items
-    WHERE user_email = $1
-    `, [userEmail], (error, result) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).send('removed cart items');
-  })
 };
 
 // add quantity to cart item by product id.
@@ -198,6 +186,43 @@ const removeQuantity = (request, response) => {
     }
   )
 }
+
+// delete cart item by products_id
+const deleteCartItem = (request, response) => {
+  const products_id = parseInt(request.params.products_id);
+  const user_email = request.params.user_email;
+  pool.query(
+    `DELETE FROM cart_items
+    WHERE products_id = $1 AND user_email = $2
+    RETURNING id, products_id, user_email, quantity
+    `, [products_id, user_email], (error, result) => {
+      if(error) {
+        throw error;
+      }
+      if (result.rowCount > 0) {
+        response.status(200).send(`address DELETE with products_id: ${products_id}`);
+      } else {
+        response.sendStatus(404);
+      }
+    }
+  )
+}
+
+// remove all cart_items belonging to a single user.
+const deleteAllFromCart = (request, response) => {
+  const userEmail = request.params.email;
+  pool.query(
+    `DELETE FROM cart_items
+    WHERE user_email = $1
+    `, [userEmail], (error, result) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).send('removed cart items');
+  })
+};
+
+
 
 module.exports = {
   getAllCartItems,
