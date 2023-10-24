@@ -10,6 +10,7 @@
     "test addresses": "jest addresses --watchAll --no-cache --detectOpenHandles",
     "test cartItems": "jest cartItems --watchAll --no-cache --detectOpenHandles",
     "test orderItems": "jest orderItems --watchAll --no-cache --detectOpenHandles",
+    "test reviews": "jest reviews --watchAll --no-cache --detectOpenHandles",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },

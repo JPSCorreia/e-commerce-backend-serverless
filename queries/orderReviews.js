@@ -16,7 +16,11 @@ const getOrderReviewsByEmailAndOrderId = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(result.rows);
+      if (result.rowCount > 0) {
+        response.status(200).json(result.rows);
+      } else {
+        response.sendStatus(404);
+      }
     }
   );
 };
