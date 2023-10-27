@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 8080;
+
 const rateLimit = require('express-rate-limit');
 
 // configure environment variables.
