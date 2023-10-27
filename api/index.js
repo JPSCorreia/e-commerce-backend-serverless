@@ -1,36 +1,51 @@
 const express = require('express');
-const apiRouter = express.Router();
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const hpp = require('hpp');
+const cors = require('cors');
+const app = express();
+const port = process.env.PORT || 8080;
+const rateLimit = require('express-rate-limit');
 
-// Mount router for /users
-const usersRouter = require('./users');
-apiRouter.use('/users', usersRouter);
+// configure environment variables.
+dotenv.config({ path: `${__dirname}/dev.env` });
 
-// Mount router for /products
-const productsRouter = require('./products');
-apiRouter.use('/products', productsRouter);
+// Secure app by setting various HTTP headers.
+app.use(helmet());
 
-// Mount router for /orders
-const ordersRouter = require('./orders');
-apiRouter.use('/orders', ordersRouter);
+// protects against HTTP Parameter Pollution attacks.
+app.use(hpp());
 
-// Mount router for /order_items
-const orderItemsRouter = require('./orderItems');
-apiRouter.use('/order_items', orderItemsRouter);
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
-// Mount router for /orders
-const cartItemsRouter = require('./cartItems');
-apiRouter.use('/cart_items', cartItemsRouter);
+// Built-in middleware JSON parser for incoming requests.
+app.use(express.json());
 
-// Mount router for /addresses
-const addressesRouter = require('./addresses');
-apiRouter.use('/addresses', addressesRouter);
+// HTTP request logger middleware setup for development use.
+app.use(morgan('dev'));
 
-// Mount router for /reviews
-const reviewsRouter = require('./reviews');
-apiRouter.use('/reviews', reviewsRouter);
+// Limit repeated requests to the API.
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 1000,
+});
+app.use(limiter);
 
-// Mount router for /reviews
-const orderReviews = require('./orderReviews');
-apiRouter.use('/orderReviews', orderReviews);
+app.get('/', (req, res) => {
+  res.json({
+    message: 'testing default route',
+  });
+});
 
-module.exports = apiRouter;
+// Mount router for /api.
+const apiRouter = require('./api');
+app.use('/api', apiRouter);
+
+
+
+module.exports = app;

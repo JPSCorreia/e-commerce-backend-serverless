@@ -3,6 +3,13 @@ const usersRouter = express.Router();
 const userQueries = require('../queries/users');
 const checkJwt = require('../middleware/authorization');
 
+// GET request test for vercel
+usersRouter.get('/teste/teste', (req, res) => {
+  res.json({
+    message: 'users route a funcionar',
+  });
+});
+
 // GET request for single user by username
 usersRouter.get('/:username', userQueries.getUserByUsername);
 
