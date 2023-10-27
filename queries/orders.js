@@ -54,6 +54,7 @@ const getAllOrderItems = (request, response) => {
     JOIN order_items
     ON order_items.products_id = products.id
     WHERE order_items.order_id = $1
+    ORDER BY order_items.id ASC
     `,
     [id],
     (error, result) => {

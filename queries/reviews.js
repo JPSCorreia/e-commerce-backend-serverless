@@ -16,7 +16,7 @@ const getReviewByProductId = (request, response) => {
       if (result.rows.length > 0) {
         response.status(200).json(result.rows);
       } else {
-        response.sendStatus(404);
+        response.sendStatus(204);
       }
     }
   );
@@ -39,7 +39,7 @@ const getReviewByUserAndId = (request, response) => {
       if (result.rowCount > 0) {
         response.status(200).json(result.rows[0]);
       } else {
-        response.sendStatus(404);
+        response.sendStatus(204);
       }
     }
   );
@@ -54,12 +54,12 @@ const createReview = (request, response, next) => {
           RETURNING id
           `,
     [
-      request.body.products_id,
-      request.body.user_email,
-      request.body.full_name,
-      request.body.comment,
-      request.body.rating,
-      request.body.image_link,
+      request.body.data.products_id,
+      request.body.data.user_email,
+      request.body.data.full_name,
+      request.body.data.comment,
+      request.body.data.rating,
+      request.body.data.image_link,
     ],
     (error, result) => {
       if (error) {
@@ -83,10 +83,10 @@ const updateReview = (request, response) => {
           WHERE id = $5
           `,
     [
-      request.body.full_name,
-      request.body.comment,
-      request.body.rating,
-      request.body.image_link,
+      request.body.data.full_name,
+      request.body.data.comment,
+      request.body.data.rating,
+      request.body.data.image_link,
       request.params.id
     ],
     (error, result) => {

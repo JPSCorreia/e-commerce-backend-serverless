@@ -9,9 +9,9 @@ describe('CART ITEMS', () => {
     });
   });
   describe('GET request for single cart by username(email).', () => {
-    it('Cart does not exist (returns a 404 status).', async () => {
+    it('Cart does not exist (returns a 204 status).', async () => {
       const username = 'fake@test.com';
-      await supertest(app).get(`/api/cart_items/${username}`).expect(404);
+      await supertest(app).get(`/api/cart_items/${username}`).expect(204);
     });
     it('Gets the correct cart (returns a 200 status).', async () => {
       const username = 'testing@test.com';
@@ -32,12 +32,12 @@ describe('CART ITEMS', () => {
     });
   });
   describe('GET request for single cart item by username(email) and product id.', () => {
-    it('Cart item does not exist (returns a 404 status).', async () => {
+    it('Cart item does not exist (returns a 204 status).', async () => {
       const username = 'fake@test.com';
       const productId = 1;
       await supertest(app)
         .get(`/api/cart_items/get_cart/${username}/${productId}`)
-        .expect(404);
+        .expect(204);
     });
     it('Gets the correct cart item(returns a 200 status).', async () => {
       const username = 'testing@test.com';
@@ -59,11 +59,11 @@ describe('CART ITEMS', () => {
     });
   });
   describe('GET request for cart total price by username(email) and product id.', () => {
-    it('Username does not exist (returns a 404 status).', async () => {
+    it('Username does not exist (returns a 204 status).', async () => {
       const username = 'fake@test.com';
       await supertest(app)
         .get(`/api/cart_items/total_price/${username}`)
-        .expect(404);
+        .expect(204);
     });
     it('Gets the correct price (returns a 200 status).', async () => {
       const username = 'testing@test.com';
@@ -76,11 +76,11 @@ describe('CART ITEMS', () => {
     });
   });
   describe('GET request for all cart items by username(email).', () => {
-    it('User does not exist (returns a 404 status).', async () => {
+    it('User does not exist (returns a 204 status).', async () => {
       const username = 'fake@test.com';
       await supertest(app)
         .get(`/api/cart_items/cart_products/${username}`)
-        .expect(404);
+        .expect(204);
     });
     it('Gets the correct cart (returns a 200 status).', async () => {
       const username = 'testing@test.com';
@@ -104,11 +104,11 @@ describe('CART ITEMS', () => {
     });
   });
   describe('GET request for cart item total by username(email) and product id.', () => {
-    it('Username does not exist (returns a 404 status).', async () => {
+    it('Username does not exist (returns a 204 status).', async () => {
       const username = 'fake@test.com';
       await supertest(app)
         .get(`/api/cart_items/total_number/${username}`)
-        .expect(404);
+        .expect(204);
     });
     it('Gets the correct item number (returns a 200 status).', async () => {
       const username = 'testing@test.com';

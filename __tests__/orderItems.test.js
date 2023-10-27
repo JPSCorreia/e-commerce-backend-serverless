@@ -9,8 +9,8 @@ describe('ORDER ITEMS', () => {
     });
   })
   describe('GET request for single order item by id.', () => {
-    it('Order item does not exist (returns a 404 status).', async () => {
-      await supertest(app).get(`/api/cart_items/0`).expect(404);
+    it('Order item does not exist (returns a 204 status).', async () => {
+      await supertest(app).get(`/api/cart_items/0`).expect(204);
     });
     it('Gets the correct order item (returns a 200 status).', async () => {
       const orderId = 28;
@@ -34,12 +34,14 @@ describe('ORDER ITEMS', () => {
   let orderItemId;
   describe('POST request for a creating a new order item.', () => {
     it('Adds a new order item to the table (returns status 200).', async () => {
-      const testOrderItemPayload = {
-          products_id: 1,
-          order_id: 115,
-          quantity: 10,
-          discount: 20
-      };
+      // const testOrderItemPayload2 = {
+      //     products_id: 1,
+      //     order_id: 115,
+      //     quantity: 10,
+      //     discount: 20
+      // };
+      const testOrderItemPayload = [[1,115,10,20]];
+
       const { body, statusCode } = await supertest(app)
         .post(`/api/order_items`)
         .send(testOrderItemPayload);
@@ -54,7 +56,7 @@ describe('ORDER ITEMS', () => {
         order_id: 116,
         quantity: 50
     };
-    it('Address does not exist (returns a 404 status).', async () => {
+    it('Order item does not exist (returns a 404 status).', async () => {
       await supertest(app).put(`/api/order_items/0`).send(testOrderItemPayload).expect(404);
     });
     it('Changes products_id, order_id and quantity (returns status 200).', async () => {

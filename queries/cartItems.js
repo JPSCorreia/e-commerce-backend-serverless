@@ -32,7 +32,7 @@ const getCartByEmail = (request, response) => {
       if (result.rows.length > 0) {
         response.status(200).json(result.rows);
       } else {
-        response.sendStatus(404);
+        response.sendStatus(204);
       }
     }
   );
@@ -56,7 +56,7 @@ const getCartByEmailAndProductId = (request, response) => {
       if (result.rows.length > 0) {
         response.status(200).json(result.rows);
       } else {
-        response.sendStatus(404);
+        response.sendStatus(204);
       }
     }
   );
@@ -78,7 +78,7 @@ const getTotalPriceByEmail = (request, response) => {
         throw error;
       }
       if (result.rows[0].sum == null) {
-        response.sendStatus(404);
+        response.sendStatus(204);
       } else {
         response.status(200).json(result.rows);
       }
@@ -105,7 +105,7 @@ const getCartProductsByEmail = (request, response) => {
       if (result.rows.length > 0) {
         response.status(200).json(result.rows);
       } else {
-        response.sendStatus(404);
+        response.sendStatus(204);
       }
     }
   );
@@ -125,7 +125,7 @@ const getItemTotalByEmail = (request, response) => {
         throw error;
       }
       if (result.rows[0].sum == null) {
-        response.sendStatus(404);
+        response.sendStatus(204);
       } else {
         response.status(200).json(result.rows);
       }

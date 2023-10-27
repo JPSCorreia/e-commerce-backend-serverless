@@ -1,4 +1,5 @@
 const pool = require('../middleware/pool');
+const format = require('pg-format');
 
 // get all order items.
 const getAllOrderItems = (request, response) => {
@@ -32,7 +33,7 @@ const getOrderItemsById = (request, response) => {
       if (result.rows.length > 0) {
         response.status(200).json(result.rows);
       } else {
-        response.sendStatus(404);
+        response.sendStatus(204);
       }
     }
   );
@@ -40,24 +41,15 @@ const getOrderItemsById = (request, response) => {
 
 // add all cart items into an order_items table.
 const addOrderItems = (request, response) => {
+  const values = request.body;
   pool.query(
-      `INSERT INTO order_items 
-      (products_id, order_id, quantity, discount) 
-      VALUES ($1, $2, $3, $4)
-      RETURNING id`
-    ,
-    [
-      request.body.products_id,
-      request.body.order_id,
-      request.body.quantity,
-      request.body.discount
-    ],
+    format(
+      'INSERT INTO order_items (products_id, order_id, quantity, discount) VALUES %L RETURNING id',
+      values
+    ),
+    [],
     (err, result) => {
-      if (result.rows.length > 0) {
-        response.status(201).json(result.rows[0].id);
-      } else {
-        response.sendStatus(404);
-      }
+      response.status(201).json(result.rows[0].id);
     }
   );
 };
@@ -70,7 +62,12 @@ const updateOrderItem = (request, response) => {
           SET products_id = $1, order_id = $2, quantity = $3
           WHERE id = $4
           `,
-    [request.body.products_id, request.body.order_id, request.body.quantity, request.params.id],
+    [
+      request.body.products_id,
+      request.body.order_id,
+      request.body.quantity,
+      request.params.id,
+    ],
     (error, result) => {
       if (error) {
         throw error;

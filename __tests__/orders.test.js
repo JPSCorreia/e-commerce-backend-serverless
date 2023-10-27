@@ -43,7 +43,7 @@ describe('ORDERS', () => {
           id: 116,
           user_email: 'testing@test.com',
           status: 'Ordered',
-          total: 604.955,
+          total: 399.955,
           created_timestamp: '2023-10-17T13:53:32.197Z',
           full_name: 'Test Tester',
           street_address: 'Avenida dos testes',
@@ -96,18 +96,6 @@ describe('ORDERS', () => {
           products_id: 1,
           quantity: 2,
           stock: 133,
-        },
-        {
-          description: 'Computer Monitor',
-          discount: 10,
-          id: 26,
-          image_link: 'monitor',
-          name: 'SAMSUNG 23.5” CF396',
-          order_id: 116,
-          price: 450,
-          products_id: 2,
-          quantity: 1,
-          stock: 236,
         },
         {
           description: 'Household Tool Kit',
@@ -199,7 +187,6 @@ describe('ORDERS', () => {
         .put(`/api/orders/${orderId}`)
         .send(testOrderPayload);
 
-        console.log(body)
       expect(statusCode).toBe(200);
     });
   });

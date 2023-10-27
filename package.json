@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest --watchAll --no-cache --detectOpenHandles",
     "test users": "jest users --watchAll --no-cache --detectOpenHandles",
+    "test products": "jest products --watchAll --no-cache --detectOpenHandles",
     "test orders": "jest orders --watchAll --no-cache --detectOpenHandles",
     "test addresses": "jest addresses --watchAll --no-cache --detectOpenHandles",
     "test cartItems": "jest cartItems --watchAll --no-cache --detectOpenHandles",
@@ -17,9 +18,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-jwt": "^8.4.1",
+    "express-rate-limit": "^7.1.2",
+    "helmet": "^7.0.0",
+    "hpp": "^0.2.3",
+    "joi": "^17.6.0",
     "jwks-rsa": "^3.1.0",
     "pg": "^8.11.3",
     "pg-format": "^1.0.4"

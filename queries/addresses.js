@@ -16,7 +16,7 @@ const getAddressesByEmail = (request, response) => {
       if (result.rows.length > 0) {
         response.status(200).json(result.rows);
       } else {
-        response.sendStatus(404);
+        response.sendStatus(204);
       }
     }
   );

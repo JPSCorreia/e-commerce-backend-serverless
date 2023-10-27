@@ -2,9 +2,9 @@ const supertest = require('supertest');
 const app = require('../index');
 describe('ADDRESSES', () => {
   describe('GET request for single address by username(email).', () => {
-    it('Address does not exist (returns a 404 status).', async () => {
+    it('Address does not exist (returns a 204 status).', async () => {
       const username = 'fake@test.com';
-      await supertest(app).get(`/api/addresses/${username}`).expect(404);
+      await supertest(app).get(`/api/addresses/${username}`).expect(204);
     });
     it('Gets the correct address (returns a 200 status).', async () => {
       const username = 'testing@test.com';
@@ -46,8 +46,6 @@ describe('ADDRESSES', () => {
         .post(`/api/addresses`)
         .send(testAddressPayload);
       addressId = body;
-      console.log(body);
-      console.log(addressId);
 
       expect(statusCode).toBe(201);
     });

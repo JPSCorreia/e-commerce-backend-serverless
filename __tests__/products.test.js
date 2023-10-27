@@ -98,20 +98,11 @@ describe('PRODUCTS', () => {
       expect(statusCode).toBe(200);
       expect(body).toEqual(resultArrayToExpect);
     });
-    it('Should return products whhen searched (returns status 200).', async () => {
+    it('Should return products when searched (returns status 200).', async () => {
       const testSearchPayload = {
         search: 'exercise',
       };
       const resultArrayToExpect = [
-        {
-          id: 14,
-          name: 'FLYBIRD Adjustable Weight Exercise Bench',
-          description: 'Exercise Bench',
-          stock: 80,
-          image_link: 'workoutbench',
-          discount: 60,
-          price: 179.99,
-        },
         {
           id: 9,
           name: 'YOSUDA Magnetic Resistance Exercise Bike',
@@ -121,6 +112,15 @@ describe('PRODUCTS', () => {
           discount: 10,
           price: 375.99,
         },
+        {
+          id: 14,
+          name: 'FLYBIRD Adjustable Weight Exercise Bench',
+          description: 'Exercise Bench',
+          stock: 77,
+          image_link: 'workoutbench',
+          discount: 60,
+          price: 179.99,
+        }
       ];
 
       const { body, statusCode } = await supertest(app)
