@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 });
 
 // Mount router for /api.
-const apiRouter = require('./api/api');
+const apiRouter = require('./api/index');
 app.use('/api', apiRouter);
 
 if (process.env.NODE_ENV !== 'test') {
