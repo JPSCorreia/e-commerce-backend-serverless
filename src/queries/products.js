@@ -16,6 +16,11 @@ const getAllProducts = (request, response) => {
   );
 };
 
+const teste = (request, response) => {
+return { "teste": "teste"}
+};
+
+
 // get product by id.
 const getProductById = (request, response) => {
   const itemId = parseInt(request.params.id);
@@ -221,4 +226,5 @@ module.exports = {
   getMostDiscountedProducts,
   getNumberOfProducts,
   getSearchResults,
+  teste,
 };

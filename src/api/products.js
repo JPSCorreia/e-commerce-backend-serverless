@@ -6,6 +6,8 @@ const checkJwt = require('../middleware/authorization');
 // GET request for entire products table
 productsRouter.get('/', productQueries.getAllProducts);
 
+productsRouter.get('/teste', productQueries.teste);
+
 // GET request for single product by id
 productsRouter.get('/:id', productQueries.getProductById);
 
