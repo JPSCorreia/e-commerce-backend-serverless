@@ -22,7 +22,7 @@ app.use(hpp());
 //   origin: process.env.FRONTEND_URL,
 //   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 // };
-app.use(cors());
+// app.use(cors());
 
 // Built-in middleware JSON parser for incoming requests.
 app.use(express.json());
