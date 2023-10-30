@@ -10,7 +10,7 @@ const app = express();
 const rateLimit = require('express-rate-limit');
 
 // configure environment variables.
-dotenv.config({ path: `${__dirname}/dev.env` });
+dotenv.config({ path: `../${__dirname}/dev.env` });
 
 // Secure app by setting various HTTP headers.
 app.use(helmet());
@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 });
 
 // Mount router for /api.
-const apiRouter = require('./api/api');
+const apiRouter = require('./api/api.js');
 app.use('/api', apiRouter);
 
 module.exports = app;

@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../index');
+const app = require('../src/index');
 describe('REVIEWS', () => {
   describe('GET request for single review by id.', () => {
     it('Product review does not exist (returns a 204 status).', async () => {

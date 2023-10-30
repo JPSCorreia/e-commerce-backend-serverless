@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../index');
+const app = require('../src/index');
 describe('ADDRESSES', () => {
   describe('GET request for single address by username(email).', () => {
     it('Address does not exist (returns a 204 status).', async () => {

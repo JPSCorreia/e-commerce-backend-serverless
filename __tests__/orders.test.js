@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../index');
+const app = require('../src/index');
 describe('ORDERS', () => {
   describe('GET request for single order by id.', () => {
     it('Order does not exist (returns a 404 status).', async () => {

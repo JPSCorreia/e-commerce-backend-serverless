@@ -1,12 +1,12 @@
 {
   "name": "emporium-api",
   "description": "Emporium express API",
-  "main": "index.js",
+  "main": ".src/index.js",
   "scripts": {
     "test": "jest --watchAll --no-cache --detectOpenHandles",
     "vercel-build": "echo hello",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "João Correia",
