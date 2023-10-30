@@ -19,7 +19,7 @@ app.use(helmet());
 app.use(hpp());
 
 const corsOptions = {
-  origin: `${process.env.FRONTEND_URL}/`,
+  origin: `https://emporium-shop.vercel.app/`,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
