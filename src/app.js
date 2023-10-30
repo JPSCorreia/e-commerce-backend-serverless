@@ -18,11 +18,15 @@ app.use(helmet());
 // protects against HTTP Parameter Pollution attacks.
 app.use(hpp());
 
-app.use(cors());
+const corsOptions = {
+  origin: `${process.env.FRONTEND_URL}/`,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 // Built-in middleware JSON parser for incoming requests.
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+// app.use(express.urlencoded());
 
 // HTTP request logger middleware setup for development use.
 app.use(morgan('dev'));
