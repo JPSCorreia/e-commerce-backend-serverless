@@ -10,7 +10,7 @@ const app = express();
 const rateLimit = require('express-rate-limit');
 
 // configure environment variables.
-dotenv.config({ path: `../${__dirname}/dev.env` });
+dotenv.config({ path: `${__dirname}/dev.env` });
 
 // Secure app by setting various HTTP headers.
 app.use(helmet());
@@ -31,11 +31,11 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Limit repeated requests to the API.
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 1000,
-});
-app.use(limiter);
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000,
+//   max: 1000,
+// });
+// app.use(limiter);
 
 app.get('/', (req, res) => {
   res.json({
