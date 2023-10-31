@@ -13,7 +13,7 @@ productsRouter.get('/teste', productQueries.teste);
 productsRouter.get('/:id', productQueries.getProductById);
 
 // GET request for products page
-productsRouter.get('/page/:page', allowCors,checkJwt, productQueries.getProductPage);
+productsRouter.get('/page/:page', checkJwt, allowCors(productQueries.getProductPage));
 
 // GET request for most discounted products
 productsRouter.get(
