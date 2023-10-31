@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/test-cors', allowCors, (req, res) => {
+app.get('/test-cors', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.send('CORS test successful');
 });
