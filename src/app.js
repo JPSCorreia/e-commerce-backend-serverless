@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const cors = require('cors');
 const app = express();
+const allowCors = require('./allowCors.js');
 
 
 const rateLimit = require('express-rate-limit');
@@ -32,7 +33,8 @@ app.use(morgan('dev'));
 // });
 // app.use(limiter);
 
-app.use(cors());
+// app.use(cors());
+
 
 app.get('/', (req, res) => {
   res.json({
@@ -40,7 +42,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/test-cors', (req, res) => {
+app.get('/test-cors', allowCors,(req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.send('CORS test successful');
 });
@@ -49,6 +51,7 @@ app.get('/test-cors', (req, res) => {
 
 // Mount router for /api.
 const apiRouter = require('./api/api.js');
+
 app.use('/api', apiRouter);
 
 
