@@ -18,12 +18,6 @@ app.use(helmet());
 // protects against HTTP Parameter Pollution attacks.
 app.use(hpp());
 
-const corsOptions = {
-  origin: `https://emporium-shop.vercel.app/`,
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-app.use(cors(corsOptions));
-
 // Built-in middleware JSON parser for incoming requests.
 app.use(express.json());
 // app.use(express.urlencoded());
@@ -37,6 +31,8 @@ app.use(morgan('dev'));
 //   max: 1000,
 // });
 // app.use(limiter);
+
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.json({
@@ -54,6 +50,8 @@ app.get('/test-cors', (req, res) => {
 // Mount router for /api.
 const apiRouter = require('./api/api.js');
 app.use('/api', apiRouter);
+
+
 
 module.exports = app;
 
