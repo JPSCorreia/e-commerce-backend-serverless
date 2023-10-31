@@ -33,8 +33,9 @@ app.use(morgan('dev'));
 // });
 // app.use(limiter);
 
-// app.use(cors());
 
+app.options('*', cors())
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.json({
@@ -52,7 +53,7 @@ app.get('/test-cors', allowCors,(req, res) => {
 // Mount router for /api.
 const apiRouter = require('./api/api.js');
 
-app.use('/api', allowCors, apiRouter);
+app.use('/api', apiRouter);
 
 
 
