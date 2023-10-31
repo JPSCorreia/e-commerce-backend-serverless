@@ -2,6 +2,7 @@ const express = require('express');
 const productsRouter = express.Router();
 const productQueries = require('../queries/products');
 const checkJwt = require('../middleware/authorization');
+const allowCors = require('../allowCors');
 
 // GET request for entire products table
 productsRouter.get('/', productQueries.getAllProducts);
@@ -12,7 +13,7 @@ productsRouter.get('/teste', productQueries.teste);
 productsRouter.get('/:id', productQueries.getProductById);
 
 // GET request for products page
-productsRouter.get('/page/:page', checkJwt, productQueries.getProductPage);
+productsRouter.get('/page/:page', allowCors,checkJwt, productQueries.getProductPage);
 
 // GET request for most discounted products
 productsRouter.get(
