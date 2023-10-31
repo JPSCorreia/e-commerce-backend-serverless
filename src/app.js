@@ -52,8 +52,6 @@ const apiRouter = require('./api/api.js');
 
 app.use('/api', apiRouter);
 
-
-
 module.exports = app;
 
 
