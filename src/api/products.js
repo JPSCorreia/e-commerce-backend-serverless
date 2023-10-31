@@ -2,7 +2,7 @@ const express = require('express');
 const productsRouter = express.Router();
 const productQueries = require('../queries/products');
 const checkJwt = require('../middleware/authorization');
-const allowCors = require('../allowCors');
+const allowCors = require('../middleware/allowCors');
 
 // GET request for entire products table
 productsRouter.get('/', allowCors(productQueries.getAllProducts));
