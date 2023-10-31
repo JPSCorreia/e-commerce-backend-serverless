@@ -5,9 +5,7 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const cors = require('cors');
 const app = express();
-const allowCors = require('./allowCors.js');
-
-
+// const allowCors = require('./allowCors.js');
 const rateLimit = require('express-rate-limit');
 
 // configure environment variables.
@@ -27,31 +25,27 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Limit repeated requests to the API.
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000,
-//   max: 1000,
-// });
-// app.use(limiter);
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 1000,
+});
+app.use(limiter);
 
 
 // app.options('*', cors())
 // app.use(cors());
 
-app.get('/', (req, res) => {
-  res.json({
-    message: 'testing default route',
-  });
-});
-
-
-app.get('/test-cors', allowCors((req, res) => {
-  // res.header('Access-Control-Allow-Origin', '*');
-  res.send('CORS test successful');
-}));
-
-// app.get('/test-cors', (req, res) => {
-//   res.send('CORS test successful');
+// app.get('/', (req, res) => {
+//   res.json({
+//     message: 'testing default route',
+//   });
 // });
+
+
+// app.get('/test-cors', allowCors((req, res) => {
+//   // res.header('Access-Control-Allow-Origin', '*');
+//   res.send('CORS test successful');
+// }));
 
 // Mount router for /api.
 const apiRouter = require('./api/api.js');
