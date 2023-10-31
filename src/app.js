@@ -34,8 +34,8 @@ app.use(morgan('dev'));
 // app.use(limiter);
 
 
-app.options('*', cors())
-app.use(cors());
+// app.options('*', cors())
+// app.use(cors());
 
 app.get('/', (req, res) => {
   res.json({
@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/test-cors', allowCors,(req, res) => {
+app.get('/test-cors', allowCors, (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.send('CORS test successful');
 });
