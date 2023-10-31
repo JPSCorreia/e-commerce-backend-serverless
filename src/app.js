@@ -52,7 +52,7 @@ app.get('/test-cors', allowCors,(req, res) => {
 // Mount router for /api.
 const apiRouter = require('./api/api.js');
 
-app.use('/api', apiRouter);
+app.use('/api', allowCors, apiRouter);
 
 
 
