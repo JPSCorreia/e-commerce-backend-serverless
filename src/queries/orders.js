@@ -83,13 +83,7 @@ const getNumberOfOrders = (request, response) => {
       if (error) {
         throw error;
       }
-
-      if (result.rows[0].count > 0) {
-        response.status(200).json(Number(result.rows[0].count));
-      } else {
-        console.log('teste')
-        response.status(404).json(Number(result.rows[0].count));
-      }
+      response.status(200).json(Number(result.rows[0].count));
     }
   );
 };
