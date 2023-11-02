@@ -1,1 +1,3 @@
-# e-commerce-backend-serverless
+# Emporium Shop server
+
+**Front end at https://github.com/JPSCorreia/emporium-shop-frontend**
