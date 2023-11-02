@@ -222,8 +222,6 @@ const deleteAllFromCart = (request, response) => {
   })
 };
 
-
-
 module.exports = {
   getAllCartItems,
   getCartByEmail,

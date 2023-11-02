@@ -5,7 +5,6 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const cors = require('cors');
 const app = express();
-// const allowCors = require('./allowCors.js');
 const rateLimit = require('express-rate-limit');
 
 // configure environment variables.
@@ -31,21 +30,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-
-// app.options('*', cors())
 app.use(cors());
-
-// app.get('/', (req, res) => {
-//   res.json({
-//     message: 'testing default route',
-//   });
-// });
-
-
-// app.get('/test-cors', allowCors((req, res) => {
-//   // res.header('Access-Control-Allow-Origin', '*');
-//   res.send('CORS test successful');
-// }));
 
 // Mount router for /api.
 const apiRouter = require('./api/api.js');

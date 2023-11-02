@@ -30,14 +30,11 @@ const schema = Joi.object({
     .xor('password', 'access_token')
     .with('password', 'repeat_password');
 
-
 schema.validate({ username: 'abc', birth_year: 1994 });
 // -> { value: { username: 'abc', birth_year: 1994 } }
 
 schema.validate({});
 // -> { value: {}, error: '"username" is required' }
-
-
 
 try {
   const value = await schema.validateAsync({ username: 'abc', birth_year: 1994 });

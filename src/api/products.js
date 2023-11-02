@@ -7,8 +7,6 @@ const allowCors = require('../middleware/allowCors');
 // GET request for entire products table
 productsRouter.get('/', allowCors(productQueries.getAllProducts));
 
-productsRouter.get('/teste', allowCors(productQueries.teste));
-
 // GET request for single product by id
 productsRouter.get('/:id', allowCors(productQueries.getProductById));
 

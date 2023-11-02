@@ -4,7 +4,6 @@ const jwksRsa = require('jwks-rsa');
 const { expressjwt: jwt } = require("express-jwt");
 
 const dev = (req,res,next) => {
-  console.log('in dev')
   next();
 }
 
