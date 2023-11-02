@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../src/index');
+const app = require('../src/app');
 
 describe('PRODUCTS', () => {
   describe('GET request for entire products table.', () => {

@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../src/index');
+const app = require('../src/app');
 describe('USERS', () => {
   describe('GET request for single user by username(email).', () => {
     it('User does not exist (returns a 404 status).', async () => {

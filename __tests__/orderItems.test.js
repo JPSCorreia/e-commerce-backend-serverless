@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../src/index');
+const app = require('../src/app');
 describe('ORDER ITEMS', () => {
   describe('GET request for all order items.', () => {
     it('Gets all the orders (returns a 200 status).', async () => {

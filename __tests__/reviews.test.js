@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../src/index');
+const app = require('../src/app');
 describe('REVIEWS', () => {
   describe('GET request for single review by id.', () => {
     it('Product review does not exist (returns a 204 status).', async () => {
@@ -64,7 +64,6 @@ describe('REVIEWS', () => {
       expect(body).toEqual(resultToExpect);
     });
   });
-
   let reviewId;
   describe('POST request for a creating a new review.', () => {
     it('Adds a new review to the table (returns status 200).', async () => {
