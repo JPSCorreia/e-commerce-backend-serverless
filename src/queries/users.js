@@ -13,11 +13,8 @@ const getUserByUsername = (request, response) => {
       if (error) {
         throw error;
       }
-      if (result.rows.length > 0) {
         response.status(200).json(result.rows);
-      } else {
-        response.sendStatus(404);
-      }
+
     }
   );
 };
